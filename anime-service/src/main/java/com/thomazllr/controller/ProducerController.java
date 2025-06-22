@@ -28,8 +28,8 @@ public class ProducerController {
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<ProducerGetResponse> findAnimeByName(@RequestParam String name) {
-        return ResponseEntity.ok(mapper.toResponse(service.findByName(name)));
+    public ResponseEntity<List<ProducerGetResponse>> findAnimeByName(@RequestParam String name) {
+        return ResponseEntity.ok(service.findByName(name).stream().map(mapper::toResponse).toList());
     }
 
     @GetMapping("/{id}")
@@ -49,12 +49,9 @@ public class ProducerController {
     public ResponseEntity<ProducerGetResponse> update(@RequestBody ProducerPutRequest request) {
 
         log.debug("Request to update producer : {}", request);
-
-        var producer = service.findById(request.getId());
+        var producer = mapper.toEntityFromPutRequest(request);
         if (producer == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-
-        producer.setName(request.getName());
-
+        service.update(producer);
         return ResponseEntity.ok(mapper.toResponse(producer));
     }
 

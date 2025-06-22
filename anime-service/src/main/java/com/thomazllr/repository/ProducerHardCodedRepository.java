@@ -1,47 +1,42 @@
 package com.thomazllr.repository;
 
-import com.thomazllr.domain.Anime;
+import com.thomazllr.data.ProducersData;
 import com.thomazllr.domain.Producer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Optional;
 
 @Repository
 public class ProducerHardCodedRepository {
 
-    private final List<Producer> producers = new ArrayList<>(List.of(
-            new Producer(v(), "Mappa", LocalDateTime.now()),
-            new Producer(v(), "Ufotable",  LocalDateTime.now()),
-            new Producer(v(), "MAD House",  LocalDateTime.now())
-    ));
+    @Autowired
+    private ProducersData producersData;
 
-    public List<Producer> getAllProducers() {
-        return producers;
+    public List<Producer> findAll() {
+        return producersData.getProducers();
     }
 
-
-    public Producer findByName(String name) {
-        return producers.stream().filter(producer -> producer.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+    public List<Producer> findByName(String name) {
+        return producersData.getProducers().stream().filter(producer -> producer.getName().equalsIgnoreCase(name)).toList();
     }
 
-    public Producer findById(long id) {
-        return producers.stream().filter(producer -> producer.getId() == id).findFirst().orElse(null);
+    public Optional<Producer> findById(long id) {
+        return producersData.getProducers().stream().filter(producer -> producer.getId() == id).findFirst();
     }
 
     public void delete(Producer producer) {
-        producers.remove(producer);
+        producersData.getProducers().remove(producer);
     }
 
-    public long v() {
-        return ThreadLocalRandom.current().nextLong(10, 100);
-
-    }
-
-    public Producer add(Producer producer) {
-        producers.add(producer);
+    public Producer save(Producer producer) {
+        producersData.getProducers().add(producer);
         return producer;
+    }
+
+    public void update(Producer producer) {
+        producersData.getProducers().remove(producer);
+        producersData.getProducers().add(producer);
     }
 }

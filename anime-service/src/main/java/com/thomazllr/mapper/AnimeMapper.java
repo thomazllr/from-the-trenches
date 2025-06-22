@@ -1,11 +1,8 @@
 package com.thomazllr.mapper;
 
 import com.thomazllr.domain.Anime;
-import com.thomazllr.domain.Producer;
 import com.thomazllr.request.AnimePostRequest;
-import com.thomazllr.request.ProducerPostRequest;
 import com.thomazllr.response.AnimeGetResponse;
-import com.thomazllr.response.ProducerGetResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

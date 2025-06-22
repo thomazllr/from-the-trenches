@@ -14,23 +14,29 @@ public class ProducerService {
     private final ProducerHardCodedRepository repository;
 
     public Producer findById(long id) {
-        return repository.findById(id);
+        return repository.findById(id).orElse(null);
     }
 
-    public Producer findByName(String name) {
+    public List<Producer> findByName(String name) {
         return repository.findByName(name);
     }
 
     public List<Producer> findAll() {
-        return repository.getAllProducers();
+        return repository.findAll();
     }
 
-    public void delete(Producer anime) {
-        repository.delete(anime);
+    public void delete(Producer producer) {
+        repository.delete(producer);
     }
 
-    public Producer save(Producer anime) {
-        return repository.add(anime);
+    public Producer save(Producer producer) {
+        return repository.save(producer);
+    }
+
+    public void update(Producer producerToBeUpdate) {
+        var producer = findById(producerToBeUpdate.getId());
+        producerToBeUpdate.setCreatedAt(producer.getCreatedAt());
+        repository.update(producerToBeUpdate);
     }
 
 
