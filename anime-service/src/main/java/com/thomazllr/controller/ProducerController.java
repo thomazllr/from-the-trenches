@@ -42,7 +42,6 @@ public class ProducerController {
         var producer = service.save(mapper.toEntity(request));
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(producer));
 
-
     }
 
     @PutMapping

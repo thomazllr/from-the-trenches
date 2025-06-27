@@ -22,7 +22,7 @@ public class AnimeService {
     }
 
     public List<Anime> findAll() {
-        return repository.getAllAnimes();
+        return repository.findAll();
     }
 
     public void delete(Anime anime) {
@@ -30,7 +30,7 @@ public class AnimeService {
     }
 
     public Anime save(Anime anime) {
-        return repository.add(anime);
+        return repository.save(anime);
     }
 }
 

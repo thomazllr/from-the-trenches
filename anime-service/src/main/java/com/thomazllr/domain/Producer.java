@@ -10,9 +10,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode(of = "id")
+@ToString
 public class Producer {
 
-    private long id;
+    private Long id;
     private String name;
     private LocalDateTime createdAt;
 
