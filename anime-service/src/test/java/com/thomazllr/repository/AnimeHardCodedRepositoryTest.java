@@ -36,7 +36,7 @@ class AnimeHardCodedRepositoryTest {
     @Test
     @Order(1)
     @DisplayName("findAll returns a list when successful")
-    void findAll_ReturnsAList_WhenSuccessful() {
+    void findAll_ReturnsAnAnimeList_WhenSuccessful() {
         BDDMockito.when(animeData.getAnimes()).thenReturn(animeList);
         var animes = animeHardCodedRepository.findAll();
         Assertions.assertThat(animes).hasSameElementsAs(animeList).hasSize(animeList.size());

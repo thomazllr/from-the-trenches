@@ -22,14 +22,9 @@ public class ProducerController {
     private final ProducerService service;
     private final ProducerMapper mapper;
 
-    @GetMapping
-    public ResponseEntity<List<ProducerGetResponse>> handle() {
-        return ResponseEntity.ok(service.findAll().stream().map(mapper::toResponse).toList());
-    }
-
     @GetMapping("/filter")
     public ResponseEntity<List<ProducerGetResponse>> findAnimeByName(@RequestParam String name) {
-        return ResponseEntity.ok(service.findByName(name).stream().map(mapper::toResponse).toList());
+        return ResponseEntity.ok(service.findAll(name).stream().map(mapper::toResponse).toList());
     }
 
     @GetMapping("/{id}")
