@@ -23,7 +23,8 @@ public class ProducerService {
         return name == null ? repository.findAll() : repository.findByName(name);
     }
 
-    public void delete(Producer producer) {
+    public void delete(Long id) {
+        var producer = findById(id);
         repository.delete(producer);
     }
 

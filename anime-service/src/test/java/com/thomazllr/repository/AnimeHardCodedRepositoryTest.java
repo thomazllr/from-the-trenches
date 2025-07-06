@@ -45,12 +45,14 @@ class AnimeHardCodedRepositoryTest {
 
     @Test
     @Order(2)
-    @DisplayName("findByName returns an anime when successful")
-    void findByName_ReturnsAnAnime_WhenSuccessful() {
+    @DisplayName("findByName returns a list with an anime when successful")
+    void findByName_ReturnsAListWithAnAnime_WhenSuccessful() {
         BDDMockito.when(animeData.getAnimes()).thenReturn(animeList);
         var anime = animeList.getFirst();
         var animeFound = animeHardCodedRepository.findByName(anime.getName());
-        Assertions.assertThat(animeFound).isNotNull().isEqualTo(anime);
+        Assertions.assertThat(animeFound)
+                .hasSize(1)
+                .contains(anime);
     }
 
     @Test
@@ -59,17 +61,20 @@ class AnimeHardCodedRepositoryTest {
     void findByName_ReturnsNull_WhenNotFound() {
         BDDMockito.when(animeData.getAnimes()).thenReturn(animeList);
         var result = animeHardCodedRepository.findByName(null);
-        Assertions.assertThat(result).isNull();
+        Assertions.assertThat(result).isEmpty();
     }
 
     @Test
     @Order(4)
-    @DisplayName("findById returns an anime when successful")
+    @DisplayName("findById returns a list with one anime when successful")
     void findById_ReturnsAnAnime_WhenSuccessful() {
         BDDMockito.when(animeData.getAnimes()).thenReturn(animeList);
         var anime = animeList.getFirst();
         var animeFound = animeHardCodedRepository.findById(anime.getId());
-        Assertions.assertThat(animeFound).isNotNull().isEqualTo(anime);
+        Assertions.assertThat(animeFound)
+                .isPresent()
+                .get()
+                .isIn(animeList);
     }
 
     @Test
@@ -104,7 +109,7 @@ class AnimeHardCodedRepositoryTest {
 
         animeHardCodedRepository.update(animeToUpdate);
 
-        var anime = animeHardCodedRepository.findById(animeToUpdate.getId());
+        var anime = animeHardCodedRepository.findById(animeToUpdate.getId()).orElse(null);
 
         Assertions.assertThat(anime).isEqualTo(animeToUpdate).hasNoNullFieldsOrProperties();
     }

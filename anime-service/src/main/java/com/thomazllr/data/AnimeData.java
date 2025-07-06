@@ -17,7 +17,4 @@ public class AnimeData {
             new Anime(3L, "Hunter x Hunter")
     ));
 
-    public List<Anime> getAnimes() {
-        return animes;
-    }
 }

@@ -18,7 +18,5 @@ public class ProducerData {
             new Producer(3L, "MAD House", LocalDateTime.now())
     ));
 
-    public List<Producer> getProducers() {
-        return producers;
-    }
+
 }

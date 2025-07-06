@@ -22,14 +22,10 @@ public class AnimeController {
     private final AnimeService animeService;
     private final AnimeMapper mapper;
 
-    @GetMapping
-    public ResponseEntity<List<AnimeGetResponse>> handle() {
-        return ResponseEntity.ok(animeService.findAll().stream().map(mapper::toResponse).toList());
-    }
 
     @GetMapping("/filter")
-    public ResponseEntity<AnimeGetResponse> findAnimeByName(@RequestParam String name) {
-        return ResponseEntity.ok(mapper.toResponse(animeService.findByName(name)));
+    public ResponseEntity<List<AnimeGetResponse>> findAnimeByName(@RequestParam(required = false) String name) {
+        return ResponseEntity.ok(animeService.findAll(name).stream().map(mapper::toResponse).toList());
     }
 
     @GetMapping("/{id}")
@@ -49,7 +45,7 @@ public class AnimeController {
 
         if (anime == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
-        animeService.delete(anime);
+        animeService.delete(anime.getId());
         return ResponseEntity.noContent().build();
     }
 

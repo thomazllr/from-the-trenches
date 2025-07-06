@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -17,12 +18,12 @@ public class AnimeHardCodedRepository {
         return animeData.getAnimes();
     }
 
-    public Anime findByName(String name) {
-        return animeData.getAnimes().stream().filter(anime -> anime.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+    public List<Anime> findByName(String name) {
+        return animeData.getAnimes().stream().filter(anime -> anime.getName().equalsIgnoreCase(name)).toList();
     }
 
-    public Anime findById(long id) {
-        return animeData.getAnimes().stream().filter(anime -> anime.getId() == id).findFirst().orElse(null);
+    public Optional<Anime> findById(long id) {
+        return animeData.getAnimes().stream().filter(anime -> anime.getId() == id).findFirst();
     }
 
     public void delete(Anime anime) {
