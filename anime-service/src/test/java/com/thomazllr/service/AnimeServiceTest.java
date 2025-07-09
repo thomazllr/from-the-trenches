@@ -103,12 +103,12 @@ class AnimeServiceTest {
 
     @Test
     @Order(6)
-    @DisplayName("save creates a anime")
-    void save_CreatesAAnime_WhenSuccessful() {
+    @DisplayName("save creates an anime")
+    void save_CreatesAnAnime_WhenSuccessful() {
 
         var animeToBeSaved = Anime.builder()
                 .id(99L)
-                .name("MAPPA")
+                .name("helsing")
                 .build();
 
         BDDMockito.when(repository.save(animeToBeSaved)).thenReturn(animeToBeSaved);
@@ -121,8 +121,8 @@ class AnimeServiceTest {
 
     @Test
     @Order(7)
-    @DisplayName("delete removes a anime")
-    void delete_RemovesAAnime_WhenSuccessful() {
+    @DisplayName("delete removes an anime")
+    void delete_RemovesAnAnime_WhenSuccessful() {
 
         var animeToDelete = animesList.getFirst();
         BDDMockito.when(repository.findById(animeToDelete.getId())).thenReturn(Optional.of(animeToDelete));
@@ -149,8 +149,8 @@ class AnimeServiceTest {
 
     @Test
     @Order(9)
-    @DisplayName("update a anime when successful")
-    void update_UpdateAAnime_WhenSuccessful() {
+    @DisplayName("update an anime when successful")
+    void update_UpdateAnAnime_WhenSuccessful() {
 
         var expectedAnimeToUpdate = animesList.getFirst();
         BDDMockito.when(repository.findById(expectedAnimeToUpdate.getId())).thenReturn(Optional.of(expectedAnimeToUpdate));
