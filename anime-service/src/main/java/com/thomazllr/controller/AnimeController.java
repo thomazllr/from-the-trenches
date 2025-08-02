@@ -24,23 +24,34 @@ public class AnimeController {
 
     @GetMapping
     public ResponseEntity<List<AnimeGetResponse>> findAll(@RequestParam(required = false) String name) {
-        return ResponseEntity.ok(animeService.findAll(name).stream().map(mapper::toResponse).toList());
+
+        var animeList = animeService.findAll(name);
+
+        var response = mapper.toAnimeGetResponseList(animeList);
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AnimeGetResponse> findAnimeById(@PathVariable long id) {
-        return ResponseEntity.ok(mapper.toResponse(animeService.findById(id)));
+
+        var anime = animeService.findByIdOrThrowNotFound(id);
+        var response = mapper.toResponse(anime);
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
     public ResponseEntity<AnimeGetResponse> save(@RequestBody AnimePostRequest request) {
-        var anime = animeService.save(mapper.toEntity(request));
-        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(anime));
+        var anime = mapper.toEntity(request);
+        animeService.save(anime);
+        var response = mapper.toResponse(anime);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id) {
-        var anime = animeService.findById(id);
+        var anime = animeService.findByIdOrThrowNotFound(id);
 
         if (anime == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
@@ -58,7 +69,8 @@ public class AnimeController {
 
         animeService.update(anime);
 
-        return ResponseEntity.ok(mapper.toResponse(anime));
+        AnimeGetResponse response = mapper.toResponse(anime);
+        return ResponseEntity.ok(response);
     }
 
 

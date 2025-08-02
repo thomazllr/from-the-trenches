@@ -7,6 +7,8 @@ import com.thomazllr.response.ProducerGetResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface ProducerMapper {
 
@@ -15,6 +17,8 @@ public interface ProducerMapper {
     Producer toEntity(ProducerPostRequest request);
 
     ProducerGetResponse toResponse(Producer entity);
+
+    List<ProducerGetResponse> toProducerGetResponseList(List<Producer> producerList);
 
     Producer toEntityFromPutRequest(ProducerPutRequest request);
 

@@ -7,7 +7,6 @@ import com.thomazllr.repository.ProducerHardCodedRepository;
 import com.thomazllr.service.ProducerService;
 import org.junit.jupiter.api.*;
 import org.mockito.BDDMockito;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;

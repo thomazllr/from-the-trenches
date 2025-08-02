@@ -1,5 +1,6 @@
 package com.thomazllr.controller;
 
+import com.thomazllr.domain.Producer;
 import com.thomazllr.mapper.ProducerMapper;
 import com.thomazllr.request.ProducerPostRequest;
 import com.thomazllr.request.ProducerPutRequest;
@@ -24,29 +25,37 @@ public class ProducerController {
 
     @GetMapping
     public ResponseEntity<List<ProducerGetResponse>> findAll(@RequestParam(required = false) String name) {
-        return ResponseEntity.ok(service.findAll(name).stream().map(mapper::toResponse).toList());
+
+        var producers = service.findAll(name);
+
+        var response = mapper.toProducerGetResponseList(producers);
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProducerGetResponse> findProducerById(@PathVariable long id) {
-        return ResponseEntity.ok(mapper.toResponse(service.findById(id)));
+        var producer = service.findById(id);
+        var response = mapper.toResponse(producer);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
     public ResponseEntity<ProducerGetResponse> save(@RequestBody ProducerPostRequest request) {
-        var producer = service.save(mapper.toEntity(request));
-        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toResponse(producer));
-
+        var producer = mapper.toEntity(request);
+        service.save(producer);
+        var response = mapper.toResponse(producer);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping
     public ResponseEntity<ProducerGetResponse> update(@RequestBody ProducerPutRequest request) {
-
         log.debug("Request to update producer : {}", request);
         var producer = mapper.toEntityFromPutRequest(request);
         if (producer == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         service.update(producer);
-        return ResponseEntity.ok(mapper.toResponse(producer));
+        var response = mapper.toResponse(producer);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")

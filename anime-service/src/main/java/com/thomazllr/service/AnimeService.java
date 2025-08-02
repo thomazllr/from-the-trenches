@@ -19,13 +19,13 @@ public class AnimeService {
         return name == null ? repository.findAll() : repository.findByName(name);
     }
 
-    public Anime findById(long id) {
+    public Anime findByIdOrThrowNotFound(long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Anime not found"));
     }
 
     public void delete(Long id) {
-        var anime = this.findById(id);
+        var anime = this.findByIdOrThrowNotFound(id);
         repository.delete(anime);
     }
 
@@ -33,8 +33,14 @@ public class AnimeService {
         return repository.save(anime);
     }
 
-    public void update(Anime animeToBeUpdate) {
-        repository.update(animeToBeUpdate);
+    public void update(Anime animeToUpdate) {
+        assertAnimeExists(animeToUpdate.getId());
+
+        repository.update(animeToUpdate);
+    }
+
+    public void assertAnimeExists(Long id) {
+        findByIdOrThrowNotFound(id);
     }
 
 }
