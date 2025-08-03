@@ -80,7 +80,7 @@ class AnimeControllerTest {
 
     @Test
     @Order(3)
-    @DisplayName("GET v1/animes returns a list of animes when argument is null")
+    @DisplayName("GET v1/animes returns a list of animes when argument is not found")
     void findAll_ReturnsAnEmptyList_WhenNameIsNotFound() throws Exception {
 
         BDDMockito.when(animeData.getAnimes()).thenReturn(animesList);

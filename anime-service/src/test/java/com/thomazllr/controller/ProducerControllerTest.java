@@ -81,7 +81,7 @@ class ProducerControllerTest {
 
     @Test
     @Order(3)
-    @DisplayName("GET v1/producers returns a list of producers when argument is null")
+    @DisplayName("GET v1/producers returns a list of producers when argument is not found")
     void findAll_ReturnsAnEmptyList_WhenNameIsNotFound() throws Exception {
 
         BDDMockito.when(producerData.getProducers()).thenReturn(producerList);

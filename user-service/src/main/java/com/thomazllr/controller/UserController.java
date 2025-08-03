@@ -4,6 +4,7 @@ import com.thomazllr.mapper.UserMapper;
 import com.thomazllr.request.UserPostRequest;
 import com.thomazllr.request.UserPutRequest;
 import com.thomazllr.response.UserGetResponse;
+import com.thomazllr.response.UserPostResponse;
 import com.thomazllr.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,10 +43,10 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserGetResponse> save(@RequestBody UserPostRequest request) {
+    public ResponseEntity<UserPostResponse> save(@RequestBody UserPostRequest request) {
         var user = mapper.toEntity(request);
         var userSaved = userService.save(user);
-        var response = mapper.toResponse(userSaved);
+        var response = mapper.toUserPostResponse(userSaved);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 

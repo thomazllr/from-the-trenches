@@ -23,7 +23,7 @@ public class UserHardCodedRepository {
     }
 
     public Optional<User> findById(long id) {
-        return userData.getUsers().stream().filter(anime -> anime.getId() == id).findFirst();
+        return userData.getUsers().stream().filter(user -> user.getId() == id).findFirst();
     }
 
     public void delete(User user) {
