@@ -16,7 +16,7 @@ public class ProducerService {
     private final ProducerHardCodedRepository repository;
 
     public Producer findById(long id) {
-        return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producer Not Found"));
     }
 
     public List<Producer> findAll(String name) {

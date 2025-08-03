@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.thomazllr</groupId>
-    <artifactId>anime-service</artifactId>
+    <artifactId>user-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Anime Service</name>
+    <name>User Service</name>
     <description>Spring Boot Direto das Trincheiras</description>
 
     <properties>

@@ -21,7 +21,7 @@ public class AnimeService {
 
     public Anime findByIdOrThrowNotFound(long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Anime not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Anime Not Found"));
     }
 
     public void delete(Long id) {

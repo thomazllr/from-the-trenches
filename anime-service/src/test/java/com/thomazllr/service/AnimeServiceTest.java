@@ -1,5 +1,6 @@
 package com.thomazllr.service;
 
+import com.thomazllr.commons.AnimeUtils;
 import com.thomazllr.domain.Anime;
 import com.thomazllr.repository.AnimeHardCodedRepository;
 import org.assertj.core.api.Assertions;
@@ -31,13 +32,14 @@ class AnimeServiceTest {
 
     private List<Anime> animesList;
 
+    @InjectMocks
+    private AnimeUtils utils;
+
     @BeforeEach
     void init() {
-        var naruto = Anime.builder().id(1L).name("naruto").build();
-        var dbz = Anime.builder().id(2L).name("dbz").build();
-        var hxh = Anime.builder().id(3L).name("hxh").build();
-        animesList = new ArrayList<>(List.of(naruto, dbz, hxh));
+        animesList = utils.createAnimes();
     }
+
 
 
     @Test

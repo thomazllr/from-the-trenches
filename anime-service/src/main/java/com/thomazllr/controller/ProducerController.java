@@ -1,8 +1,8 @@
 package com.thomazllr.controller;
 
-import com.thomazllr.domain.Producer;
 import com.thomazllr.mapper.ProducerMapper;
 import com.thomazllr.request.ProducerPostRequest;
+import com.thomazllr.request.ProducerPostResponse;
 import com.thomazllr.request.ProducerPutRequest;
 import com.thomazllr.response.ProducerGetResponse;
 import com.thomazllr.service.ProducerService;
@@ -41,21 +41,19 @@ public class ProducerController {
     }
 
     @PostMapping
-    public ResponseEntity<ProducerGetResponse> save(@RequestBody ProducerPostRequest request) {
+    public ResponseEntity<ProducerPostResponse> save(@RequestBody ProducerPostRequest request) {
         var producer = mapper.toEntity(request);
-        service.save(producer);
-        var response = mapper.toResponse(producer);
+        var producerSaved = service.save(producer);
+        var response = mapper.toProducerPostResponse(producerSaved);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping
-    public ResponseEntity<ProducerGetResponse> update(@RequestBody ProducerPutRequest request) {
+    public ResponseEntity<Void> update(@RequestBody ProducerPutRequest request) {
         log.debug("Request to update producer : {}", request);
         var producer = mapper.toEntityFromPutRequest(request);
-        if (producer == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         service.update(producer);
-        var response = mapper.toResponse(producer);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")

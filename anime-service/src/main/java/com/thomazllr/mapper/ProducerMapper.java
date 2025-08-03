@@ -2,6 +2,7 @@ package com.thomazllr.mapper;
 
 import com.thomazllr.domain.Producer;
 import com.thomazllr.request.ProducerPostRequest;
+import com.thomazllr.request.ProducerPostResponse;
 import com.thomazllr.request.ProducerPutRequest;
 import com.thomazllr.response.ProducerGetResponse;
 import org.mapstruct.Mapper;
@@ -17,6 +18,8 @@ public interface ProducerMapper {
     Producer toEntity(ProducerPostRequest request);
 
     ProducerGetResponse toResponse(Producer entity);
+
+    ProducerPostResponse toProducerPostResponse(Producer entity);
 
     List<ProducerGetResponse> toProducerGetResponseList(List<Producer> producerList);
 

@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: anime-service
+  threads:
+    virtual:
+      enabled: true
+server:
+  error:
+    include-stacktrace: on_param
+  tomcat:
+    threads:
+      max: 20
+
+logging:
+  level:
+    com.thomazllr: debug

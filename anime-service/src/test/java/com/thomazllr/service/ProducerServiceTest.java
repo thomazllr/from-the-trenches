@@ -1,5 +1,6 @@
 package com.thomazllr.service;
 
+import com.thomazllr.commons.ProducerUtils;
 import com.thomazllr.domain.Producer;
 import com.thomazllr.repository.ProducerHardCodedRepository;
 import org.assertj.core.api.Assertions;
@@ -32,12 +33,12 @@ class ProducerServiceTest {
 
     private List<Producer> producerList;
 
+    @InjectMocks
+    private ProducerUtils utils;
+
     @BeforeEach
     void init() {
-        var ufotable = Producer.builder().id(1L).name("ufotable").createdAt(LocalDateTime.now()).build();
-        var wit = Producer.builder().id(2L).name("wit").createdAt(LocalDateTime.now()).build();
-        var ghibli = Producer.builder().id(3L).name("ghibli").createdAt(LocalDateTime.now()).build();
-        producerList = new ArrayList<>(List.of(ufotable, wit, ghibli));
+        producerList = utils.createProducers();
     }
 
 
@@ -107,11 +108,7 @@ class ProducerServiceTest {
     @DisplayName("save creates a producer")
     void save_CreatesAProducer_WhenSuccessful() {
 
-        var producerToBeSaved = Producer.builder()
-                .id(99L)
-                .name("MAPPA")
-                .createdAt(LocalDateTime.now())
-                .build();
+        var producerToBeSaved = utils.createProducer();
 
         BDDMockito.when(repository.save(producerToBeSaved)).thenReturn(producerToBeSaved);
 

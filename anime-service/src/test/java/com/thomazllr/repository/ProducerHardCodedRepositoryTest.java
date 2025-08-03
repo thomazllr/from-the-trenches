@@ -1,5 +1,6 @@
 package com.thomazllr.repository;
 
+import com.thomazllr.commons.ProducerUtils;
 import com.thomazllr.data.ProducerData;
 import com.thomazllr.domain.Producer;
 import org.assertj.core.api.Assertions;
@@ -25,13 +26,12 @@ class ProducerHardCodedRepositoryTest {
     private ProducerData producerData;
     private List<Producer> producerList;
 
+    @InjectMocks
+    private ProducerUtils utils;
 
     @BeforeEach
     void init() {
-        var ufotable = Producer.builder().id(1L).name("ufotable").createdAt(LocalDateTime.now()).build();
-        var wit = Producer.builder().id(2L).name("wit").createdAt(LocalDateTime.now()).build();
-        var ghibli = Producer.builder().id(3L).name("ghibli").createdAt(LocalDateTime.now()).build();
-        producerList = new ArrayList<>(List.of(ufotable, wit, ghibli));
+        producerList = utils.createProducers();
     }
 
     @Test
@@ -81,12 +81,7 @@ class ProducerHardCodedRepositoryTest {
     void save_CreatesAProducer_WhenSuccessful() {
         BDDMockito.when(producerData.getProducers()).thenReturn(producerList);
 
-        var producerToBeSaved = Producer.builder()
-                .id(99L)
-                .name("MAPPA")
-                .createdAt(LocalDateTime.now())
-                .build();
-
+        var producerToBeSaved = utils.createProducer();
         var producer = repository.save(producerToBeSaved);
         Assertions.assertThat(producer).isNotNull().isEqualTo(producerToBeSaved).hasNoNullFieldsOrProperties();
         var producerOptional = repository.findById(producerToBeSaved.getId());
