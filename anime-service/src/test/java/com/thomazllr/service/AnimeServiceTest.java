@@ -13,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +38,6 @@ class AnimeServiceTest {
     void init() {
         animesList = utils.createAnimes();
     }
-
 
 
     @Test
@@ -108,10 +106,7 @@ class AnimeServiceTest {
     @DisplayName("save creates an anime")
     void save_CreatesAnAnime_WhenSuccessful() {
 
-        var animeToBeSaved = Anime.builder()
-                .id(99L)
-                .name("helsing")
-                .build();
+        var animeToBeSaved = utils.createAnime();
 
         BDDMockito.when(repository.save(animeToBeSaved)).thenReturn(animeToBeSaved);
 

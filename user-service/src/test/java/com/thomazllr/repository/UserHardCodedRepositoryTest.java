@@ -37,8 +37,8 @@ class UserHardCodedRepositoryTest {
     @DisplayName("findAll returns a list with all users")
     void findAll_ReturnsAllUsers_WhenSuccessful() {
         BDDMockito.when(userData.getUsers()).thenReturn(usersList);
-        var producers = repository.findAll();
-        Assertions.assertThat(producers).isNotNull().hasSize(usersList.size());
+        var users = repository.findAll();
+        Assertions.assertThat(users).isNotNull().hasSize(usersList.size());
 
     }
 
@@ -65,7 +65,7 @@ class UserHardCodedRepositoryTest {
     @Test
     @Order(4)
     @DisplayName("findByFirstName returns list with an user when name exist")
-    void findByFirstName_ReturnListWithOneProducer_WhenNameIsFound() {
+    void findByFirstName_ReturnListWithOneUser_WhenNameIsFound() {
         BDDMockito.when(userData.getUsers()).thenReturn(usersList);
         var expectedUser = usersList.getFirst();
         var users = repository.findByName(expectedUser.getFirstName());
@@ -74,7 +74,7 @@ class UserHardCodedRepositoryTest {
 
 
     @Test
-    @Order(3)
+    @Order(5)
     @DisplayName("save creates an user")
     void save_CreatesAUser_WhenSuccessful() {
         BDDMockito.when(userData.getUsers()).thenReturn(usersList);
@@ -82,9 +82,20 @@ class UserHardCodedRepositoryTest {
         var userToBeSaved = utils.createUser();
         var user = repository.save(userToBeSaved);
         Assertions.assertThat(user).isNotNull().isEqualTo(userToBeSaved).hasNoNullFieldsOrProperties();
-        var producerOptional = repository.findById(userToBeSaved.getId());
-        Assertions.assertThat(producerOptional).isPresent().contains(userToBeSaved);
+        var userOptional = repository.findById(userToBeSaved.getId());
+        Assertions.assertThat(userOptional).isPresent().contains(userToBeSaved);
 
+    }
+
+    @Test
+    @Order(6)
+    @DisplayName("delete remove a user")
+    void delete_RemoveUser_WhenSuccessful() {
+        BDDMockito.when(userData.getUsers()).thenReturn(usersList);
+        var expectedUserToDelete = usersList.getFirst();
+        repository.delete(expectedUserToDelete);
+        var users = repository.findAll();
+        Assertions.assertThat(users).isNotEmpty().doesNotContain(expectedUserToDelete);
 
     }
 

@@ -19,9 +19,9 @@ public class UserUtils {
     public User createUser() {
         return User.builder()
                 .id(99L)
-                .firstName("Naruto")
-                .lastName("Uzumaki")
-                .email("uzumaki@gmail")
+                .firstName("Sasuke")
+                .lastName("Uchiha")
+                .email("sasuke@gmail")
                 .build();
     }
 }
