@@ -1,9 +1,17 @@
 spring:
+  config:
+    import: optional:classpath:.env[.properties]
   application:
     name: user-service
   threads:
     virtual:
       enabled: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/user_service?useTimeZone=true&serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: ${ENV_ROOT_USER}
+    password: ${ENV_ROOT_PASSWORD}
+  jpa:
+    show-sql: true
 server:
   error:
     include-stacktrace: on_param

@@ -1,6 +1,7 @@
 package com.thomazllr.service;
 
 import com.thomazllr.domain.User;
+import com.thomazllr.exception.NotFoundException;
 import com.thomazllr.repository.UserHardCodedRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class UserService {
 
     public User findByIdOrThrowNotFound(long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User Not Found"));
+                .orElseThrow(() -> new NotFoundException("User Not Found"));
     }
 
     public void delete(Long id) {
