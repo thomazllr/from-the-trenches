@@ -1,11 +1,10 @@
 package com.thomazllr.service;
 
 import com.thomazllr.domain.Producer;
+import com.thomazllr.exception.NotFoundException;
 import com.thomazllr.repository.ProducerHardCodedRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -16,7 +15,7 @@ public class ProducerService {
     private final ProducerHardCodedRepository repository;
 
     public Producer findById(long id) {
-        return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producer Not Found"));
+        return repository.findById(id).orElseThrow(() -> new NotFoundException("Producer Not Found"));
     }
 
     public List<Producer> findAll(String name) {

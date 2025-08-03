@@ -117,10 +117,13 @@ class AnimeControllerTest {
 
         BDDMockito.when(animeData.getAnimes()).thenReturn(animesList);
 
+        var response = readResourceFile("anime/get-anime-by-id-404.json");
+
         Long id = 99L;
 
         mockMvc.perform(MockMvcRequestBuilders.get("/v1/animes/{id}", id))
-                .andDo(MockMvcResultHandlers.print()).andExpect(MockMvcResultMatchers.status().isNotFound());
+                .andDo(MockMvcResultHandlers.print()).andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.content().json(response));
 
     }
 
@@ -174,13 +177,14 @@ class AnimeControllerTest {
         BDDMockito.when(animeData.getAnimes()).thenReturn(animesList);
 
         var request = readResourceFile("anime/put-request-anime-404.json");
+        var response = readResourceFile("anime/put-anime-by-id-404.json");
 
         mockMvc.perform(MockMvcRequestBuilders.put("/v1/animes")
                         .content(request)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
-                .andExpect(MockMvcResultMatchers.status().reason("Anime Not Found"));
+                .andExpect(MockMvcResultMatchers.content().json(response));
 
     }
 
@@ -204,12 +208,14 @@ class AnimeControllerTest {
 
         BDDMockito.when(animeData.getAnimes()).thenReturn(animesList);
 
+        var response = readResourceFile("anime/delete-anime-by-id-404.json");
+
         var id = 99L;
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/v1/animes/{id}", id))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
-                .andExpect(MockMvcResultMatchers.status().reason("Anime Not Found"));
+                .andExpect(MockMvcResultMatchers.content().json(response));
 
     }
 
