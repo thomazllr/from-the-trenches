@@ -3,7 +3,7 @@ package com.thomazllr.mapper;
 import com.thomazllr.domain.User;
 import com.thomazllr.request.UserPostRequest;
 import com.thomazllr.request.UserPutRequest;
-import com.thomazllr.response.AnimeGetResponse;
+import com.thomazllr.response.UserGetResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -17,7 +17,7 @@ public interface UserMapper {
 
     User toEntityFromUserPutRequest(UserPutRequest entity);
 
-    List<AnimeGetResponse> toUserGetResponseList(List<User> userList);
+    List<UserGetResponse> toUserGetResponseList(List<User> userList);
 
-    AnimeGetResponse toResponse(User entity);
+    UserGetResponse toResponse(User entity);
 }

@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AnimeGetResponse {
+public class UserGetResponse {
     private long id;
     private String firstName;
     private String lastName;

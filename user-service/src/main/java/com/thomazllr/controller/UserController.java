@@ -3,7 +3,7 @@ package com.thomazllr.controller;
 import com.thomazllr.mapper.UserMapper;
 import com.thomazllr.request.UserPostRequest;
 import com.thomazllr.request.UserPutRequest;
-import com.thomazllr.response.AnimeGetResponse;
+import com.thomazllr.response.UserGetResponse;
 import com.thomazllr.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ public class UserController {
     private final UserMapper mapper;
 
     @GetMapping
-    public ResponseEntity<List<AnimeGetResponse>> findAll(@RequestParam(required = false) String firstName) {
+    public ResponseEntity<List<UserGetResponse>> findAll(@RequestParam(required = false) String firstName) {
 
         var userList = userService.findAll(firstName);
 
@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AnimeGetResponse> findAnimeById(@PathVariable long id) {
+    public ResponseEntity<UserGetResponse> findUserById(@PathVariable long id) {
 
         var user = userService.findByIdOrThrowNotFound(id);
         var response = mapper.toResponse(user);
@@ -42,7 +42,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<AnimeGetResponse> save(@RequestBody UserPostRequest request) {
+    public ResponseEntity<UserGetResponse> save(@RequestBody UserPostRequest request) {
         var user = mapper.toEntity(request);
         var userSaved = userService.save(user);
         var response = mapper.toResponse(userSaved);
