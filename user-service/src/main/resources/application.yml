@@ -12,6 +12,8 @@ spring:
     password: ${ENV_ROOT_PASSWORD}
   jpa:
     show-sql: true
+    hibernate:
+      ddl-auto: update
 server:
   error:
     include-stacktrace: on_param

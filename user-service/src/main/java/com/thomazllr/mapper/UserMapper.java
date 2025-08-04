@@ -13,7 +13,6 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    @Mapping(target = "id", expression = "java(java.util.concurrent.ThreadLocalRandom.current().nextLong(10, 1000))")
     User toEntity(UserPostRequest request);
 
     User toEntityFromUserPutRequest(UserPutRequest entity);

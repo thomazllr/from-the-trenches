@@ -2,7 +2,7 @@ package com.thomazllr.service;
 
 import com.thomazllr.commons.UserUtils;
 import com.thomazllr.domain.User;
-import com.thomazllr.repository.UserHardCodedRepository;
+import com.thomazllr.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +27,7 @@ class UserServiceTest {
     private UserService service;
 
     @Mock
-    private UserHardCodedRepository repository;
+    private UserRepository repository;
 
     private List<User> usersList;
 
@@ -56,7 +56,7 @@ class UserServiceTest {
     void findAll_ReturnsFoundUserInList_WhenArgumentExists() {
         var user = usersList.getFirst();
         var expectedUserFound = singletonList(user);
-        BDDMockito.when(repository.findByName(user.getFirstName())).thenReturn(expectedUserFound);
+        BDDMockito.when(repository.findByFirstNameIgnoreCase(user.getFirstName())).thenReturn(expectedUserFound);
         var users = service.findAll(user.getFirstName());
         Assertions.assertThat(users).isNotNull().containsAll(expectedUserFound);
     }
@@ -67,7 +67,7 @@ class UserServiceTest {
     void findAll_ReturnsAnEmptyList_WhenArgumentExists() {
 
         var argument = "not-found";
-        BDDMockito.when(repository.findByName(argument)).thenReturn(emptyList());
+        BDDMockito.when(repository.findByFirstNameIgnoreCase(argument)).thenReturn(emptyList());
         var users = service.findAll(argument);
         Assertions.assertThat(users).isNotNull().isEmpty();
     }
@@ -152,7 +152,9 @@ class UserServiceTest {
 
         var expectedUserToUpdate = usersList.getFirst();
         BDDMockito.when(repository.findById(expectedUserToUpdate.getId())).thenReturn(Optional.of(expectedUserToUpdate));
-        BDDMockito.doNothing().when(repository).update(expectedUserToUpdate);
+
+        BDDMockito.when(repository.save(expectedUserToUpdate)).thenReturn(expectedUserToUpdate);
+
         Assertions.assertThatNoException().isThrownBy(() -> service.update(expectedUserToUpdate));
 
     }
