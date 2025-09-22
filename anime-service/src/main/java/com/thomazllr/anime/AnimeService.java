@@ -1,8 +1,7 @@
-package com.thomazllr.service;
+package com.thomazllr.anime;
 
 import com.thomazllr.domain.Anime;
 import com.thomazllr.exception.NotFoundException;
-import com.thomazllr.repository.AnimeHardCodedRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +11,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AnimeService {
 
-    private final AnimeHardCodedRepository repository;
+    private final AnimeRepository repository;
 
     public List<Anime> findAll(String name) {
-        return name == null ? repository.findAll() : repository.findByName(name);
+        return name == null ? repository.findAll() : repository.findAnimeByName(name);
     }
 
     public Anime findByIdOrThrowNotFound(long id) {
@@ -35,7 +34,7 @@ public class AnimeService {
     public void update(Anime animeToUpdate) {
         assertAnimeExists(animeToUpdate.getId());
 
-        repository.update(animeToUpdate);
+        repository.save(animeToUpdate);
     }
 
     public void assertAnimeExists(Long id) {

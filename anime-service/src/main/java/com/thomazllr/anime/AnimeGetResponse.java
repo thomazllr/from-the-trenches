@@ -1,13 +1,11 @@
-package com.thomazllr.request;
+package com.thomazllr.anime;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
-public class AnimePutRequest {
+public class AnimeGetResponse {
     private long id;
     private String name;
 }

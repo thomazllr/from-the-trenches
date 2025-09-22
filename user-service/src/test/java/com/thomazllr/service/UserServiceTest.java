@@ -151,7 +151,7 @@ class UserServiceTest {
     void update_UpdateAnUser_WhenSuccessful() {
 
         var expectedUserToUpdate = usersList.getFirst();
-        BDDMockito.when(repository.findById(expectedUserToUpdate.getId())).thenReturn(Optional.of(expectedUserToUpdate));
+        expectedUserToUpdate.setFirstName("Updated");
 
         BDDMockito.when(repository.save(expectedUserToUpdate)).thenReturn(expectedUserToUpdate);
 

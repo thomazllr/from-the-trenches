@@ -1,8 +1,7 @@
-package com.thomazllr.service;
+package com.thomazllr.producer;
 
 import com.thomazllr.domain.Producer;
 import com.thomazllr.exception.NotFoundException;
-import com.thomazllr.repository.ProducerHardCodedRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +11,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProducerService {
 
-    private final ProducerHardCodedRepository repository;
+    private final ProducerRepository repository;
 
     public Producer findById(long id) {
         return repository.findById(id).orElseThrow(() -> new NotFoundException("Producer Not Found"));
     }
 
     public List<Producer> findAll(String name) {
-        return name == null ? repository.findAll() : repository.findByName(name);
+        return name == null ? repository.findAll() : repository.findProducerByName(name);
     }
 
     public void delete(Long id) {
@@ -34,7 +33,7 @@ public class ProducerService {
     public void update(Producer producerToBeUpdate) {
         var producer = findById(producerToBeUpdate.getId());
         producerToBeUpdate.setCreatedAt(producer.getCreatedAt());
-        repository.update(producerToBeUpdate);
+        repository.save(producerToBeUpdate);
     }
 
 

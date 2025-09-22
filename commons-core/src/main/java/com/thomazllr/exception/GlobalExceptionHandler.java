@@ -23,4 +23,11 @@ public class GlobalExceptionHandler {
         var error = new DefaultErrorMessage(badRequest.value(), "Duplicated entry for one of the unique field");
         return ResponseEntity.status(badRequest).body(error);
     }
+
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    public ResponseEntity<DefaultErrorMessage> handleEmailAlreadyExists(EmailAlreadyExistsException e) {
+        HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+        var error = new DefaultErrorMessage(badRequest.value(), e.getReason());
+        return ResponseEntity.status(badRequest).body(error);
+    }
 }

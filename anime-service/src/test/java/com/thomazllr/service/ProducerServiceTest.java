@@ -2,7 +2,8 @@ package com.thomazllr.service;
 
 import com.thomazllr.commons.ProducerUtils;
 import com.thomazllr.domain.Producer;
-import com.thomazllr.repository.ProducerHardCodedRepository;
+import com.thomazllr.producer.ProducerRepository;
+import com.thomazllr.producer.ProducerService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,8 +14,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +28,7 @@ class ProducerServiceTest {
     private ProducerService service;
 
     @Mock
-    private ProducerHardCodedRepository repository;
+    private ProducerRepository repository;
 
     private List<Producer> producerList;
 
@@ -58,7 +57,7 @@ class ProducerServiceTest {
     void findAll_ReturnsFoundProducerInList_WhenArgumentExists() {
         var producer = producerList.getFirst();
         var expectedProducerFound = singletonList(producer);
-        BDDMockito.when(repository.findByName(producer.getName())).thenReturn(expectedProducerFound);
+        BDDMockito.when(repository.findProducerByName(producer.getName())).thenReturn(expectedProducerFound);
         var producers = service.findAll(producer.getName());
         Assertions.assertThat(producers).isNotNull().containsAll(expectedProducerFound);
     }
@@ -69,7 +68,7 @@ class ProducerServiceTest {
     void findAll_ReturnsAnEmptyList_WhenArgumentExists() {
 
         var argument = "not-found";
-        BDDMockito.when(repository.findByName(argument)).thenReturn(emptyList());
+        BDDMockito.when(repository.findProducerByName(argument)).thenReturn(emptyList());
         var producers = service.findAll(argument);
         Assertions.assertThat(producers).isNotNull().isEmpty();
     }
@@ -153,7 +152,8 @@ class ProducerServiceTest {
 
         var expectedProducerToUpdate = producerList.getFirst();
         BDDMockito.when(repository.findById(expectedProducerToUpdate.getId())).thenReturn(Optional.of(expectedProducerToUpdate));
-        BDDMockito.doNothing().when(repository).update(expectedProducerToUpdate);
+        BDDMockito.when(repository.save(expectedProducerToUpdate))
+                .thenReturn(expectedProducerToUpdate);
         Assertions.assertThatNoException().isThrownBy(() -> service.update(expectedProducerToUpdate));
 
     }

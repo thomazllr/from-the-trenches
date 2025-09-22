@@ -1,12 +1,11 @@
 package com.thomazllr.service;
 
 import com.thomazllr.domain.User;
+import com.thomazllr.exception.EmailAlreadyExistsException;
 import com.thomazllr.exception.NotFoundException;
 import com.thomazllr.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class UserService {
     }
 
     public void update(User userToUpdate) {
-        assertEmailDoesNotExist(userToUpdate.getEmail(),userToUpdate.getId());
+        assertEmailDoesNotExist(userToUpdate.getEmail(), userToUpdate.getId());
         repository.save(userToUpdate);
     }
 
@@ -53,7 +52,7 @@ public class UserService {
     }
 
     private void throwEmailAlreadyExists(User user) {
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email: '%s' already exists".formatted(user.getEmail()));
+        throw new EmailAlreadyExistsException("Email: '%s' already exists".formatted(user.getEmail()));
     }
 
 }

@@ -1,16 +1,28 @@
 spring:
+  config:
+    import: optional:classpath:.env[.properties]
   application:
     name: anime-service
   threads:
     virtual:
       enabled: true
+  datasource:
+    url: jdbc:mysql://localhost:3307/anime_service?serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: ${ENV_ROOT_USER}
+    password: ${ENV_ROOT_PASSWORD}
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
 server:
   error:
     include-stacktrace: on_param
   tomcat:
     threads:
       max: 20
-
 logging:
   level:
     com.thomazllr: debug

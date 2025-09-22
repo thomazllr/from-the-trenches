@@ -1,11 +1,9 @@
-package com.thomazllr.request;
+package com.thomazllr.producer;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter

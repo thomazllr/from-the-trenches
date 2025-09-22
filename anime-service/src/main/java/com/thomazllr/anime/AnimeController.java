@@ -1,10 +1,5 @@
-package com.thomazllr.controller;
+package com.thomazllr.anime;
 
-import com.thomazllr.mapper.AnimeMapper;
-import com.thomazllr.request.AnimePostRequest;
-import com.thomazllr.request.AnimePutRequest;
-import com.thomazllr.response.AnimeGetResponse;
-import com.thomazllr.service.AnimeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.thomazllr.request;
+package com.thomazllr.producer;
 
 import lombok.Getter;
 import lombok.Setter;

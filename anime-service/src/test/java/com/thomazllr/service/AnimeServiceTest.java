@@ -1,8 +1,9 @@
 package com.thomazllr.service;
 
+import com.thomazllr.anime.AnimeService;
 import com.thomazllr.commons.AnimeUtils;
 import com.thomazllr.domain.Anime;
-import com.thomazllr.repository.AnimeHardCodedRepository;
+import com.thomazllr.anime.AnimeRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +28,7 @@ class AnimeServiceTest {
     private AnimeService service;
 
     @Mock
-    private AnimeHardCodedRepository repository;
+    private AnimeRepository repository;
 
     private List<Anime> animesList;
 
@@ -56,7 +57,7 @@ class AnimeServiceTest {
     void findAll_ReturnsFoundAnimeInList_WhenArgumentExists() {
         var anime = animesList.getFirst();
         var expectedAnimeFound = singletonList(anime);
-        BDDMockito.when(repository.findByName(anime.getName())).thenReturn(expectedAnimeFound);
+        BDDMockito.when(repository.findAnimeByName(anime.getName())).thenReturn(expectedAnimeFound);
         var animes = service.findAll(anime.getName());
         Assertions.assertThat(animes).isNotNull().containsAll(expectedAnimeFound);
     }
@@ -67,7 +68,7 @@ class AnimeServiceTest {
     void findAll_ReturnsAnEmptyList_WhenArgumentExists() {
 
         var argument = "not-found";
-        BDDMockito.when(repository.findByName(argument)).thenReturn(emptyList());
+        BDDMockito.when(repository.findAnimeByName(argument)).thenReturn(emptyList());
         var animes = service.findAll(argument);
         Assertions.assertThat(animes).isNotNull().isEmpty();
     }
@@ -151,7 +152,8 @@ class AnimeServiceTest {
 
         var expectedAnimeToUpdate = animesList.getFirst();
         BDDMockito.when(repository.findById(expectedAnimeToUpdate.getId())).thenReturn(Optional.of(expectedAnimeToUpdate));
-        BDDMockito.doNothing().when(repository).update(expectedAnimeToUpdate);
+        BDDMockito.when(repository.save(expectedAnimeToUpdate))
+                .thenReturn(expectedAnimeToUpdate);
         Assertions.assertThatNoException().isThrownBy(() -> service.update(expectedAnimeToUpdate));
 
     }

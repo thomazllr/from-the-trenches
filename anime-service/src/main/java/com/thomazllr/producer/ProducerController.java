@@ -1,11 +1,5 @@
-package com.thomazllr.controller;
+package com.thomazllr.producer;
 
-import com.thomazllr.mapper.ProducerMapper;
-import com.thomazllr.request.ProducerPostRequest;
-import com.thomazllr.request.ProducerPostResponse;
-import com.thomazllr.request.ProducerPutRequest;
-import com.thomazllr.response.ProducerGetResponse;
-import com.thomazllr.service.ProducerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
